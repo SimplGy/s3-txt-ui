@@ -1,0 +1,11 @@
+.listOfFiles { padding: 10px; }
+
+.listOfFiles h2 { padding: 0; margin: 0; margin-bottom: 10px; }
+
+.listOfFiles ul { list-style: none; margin: 0; padding: 0; }
+
+.listOfFiles li { list-style: none; margin: 0; padding: 0; padding: 3px 0; }
+
+.listOfFiles a { text-decoration: none; }
+
+.listOfFiles a:hover { text-decoration: underline; }

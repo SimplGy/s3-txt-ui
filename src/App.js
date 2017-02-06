@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import ListOfFiles from './fileList/ListOfFiles';
-import FullScreenFile from './fileList/FullScreenFile';
+import ListOfFiles from './vertical/fileList/ListOfFiles';
+import FullScreenFile from './vertical/fileList/FullScreenFile';
 
 class App extends Component {
 

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ListOfFiles from './vertical/fileList/ListOfFiles';
 import FullScreenFile from './vertical/fileList/FullScreenFile';
+import urlToAction from './horizontal/urlParser'
 
 class App extends Component {
 
@@ -18,19 +19,28 @@ class App extends Component {
   }
 
   componentWillUpdate(nextProps, nextState) {
-    console.log("App componentWillUpdate", { nextProps, nextState })
+    console.log("App componentWillUpdate", { nextProps, nextState });
+  }
+
+  componentDidMount() {
+    console.log("App #componentDidMount");
+    let action = urlToAction(window.location.pathname);
+    console.log(action)
   }
 
   render() {
-    let currentScreen;
-    const file = this.state.selectedFile;
-    currentScreen = file == null
-      ? <ListOfFiles selectFile={this.onFileSelected} />
-      : <FullScreenFile file={file} backAction={()=>this.onFileSelected(null)} />
-
+    // let currentScreen;
+    // const file = this.state.selectedFile;
+    // currentScreen = file == null
+    //   ? <ListOfFiles selectFile={this.onFileSelected} />
+    //   : <FullScreenFile file={file} backAction={()=>this.onFileSelected(null)} />
+    //
     return (
       <div className="App">
-        { currentScreen }
+
+        <pre>
+          o First let's grab the url
+        </pre>
       </div>
     );
   }

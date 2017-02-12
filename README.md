@@ -8,6 +8,11 @@ Then maybe tap to complete/uncomplete tasks
 
 Maybe later support text editing
 
+## Start Developing
+
+    npm start
+
+
 ---
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).

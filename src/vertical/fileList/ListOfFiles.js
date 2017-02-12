@@ -1,4 +1,8 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { SCREENS } from '../../horizontal/routing';
+import ACTIONS from '../../horizontal/ACTIONS';
+import { slugify } from '../../horizontal/fileOps';
 import './listOfFiles.css';
 import fakeData from '../../horizontal/_fileData.js';
 
@@ -16,12 +20,25 @@ class ListOfFiles extends Component {
   }
 
   onClickFile(e, file) {
-    this.props.selectFile(file);
+    e.preventDefault();
+    console.log('onClickFile', this.props);
+    this.props.dispatch({
+      type: ACTIONS.urlChanged,
+      payload: { screen: SCREENS.oneFile, itemId: slugify(file.name) }
+    });
+
+    // TODO: abstract out the dispatcher (ie: action creator)
+
+    // TODO: slugify the raw file name
+
+    // TODO: I could either change the URL and let the app respond, or fire an action directly
+    // eg: fire an action, allow that to change the location hash and set state
+    // eg2: change url, allow that to fire an action and set state
   }
 
   render() {
     const rows = this.props.files.map(
-      f => <OneFile key={f.name} file={f} action={ e => this.onClickFile(e, f) } />
+      f => <OneFile key={f.name} file={f} action={ e => { this.onClickFile(e, f); }} />
     );
     return (
       <div className="listOfFiles">
@@ -43,4 +60,4 @@ ListOfFiles.defaultProps = {
   files: fakeData
 };
 
-export default ListOfFiles;
+export default connect()(ListOfFiles);

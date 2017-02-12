@@ -3,3 +3,21 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+
+ul.todoList {
+  padding-left: 20px;
+  text-indent: 2px;
+  list-style: none;
+  list-style-position: outside;
+}
+ul.todoList li:before {
+  content: '☐';
+  margin-left: -1em;
+  margin-right: .100em;
+}
+ul.todoList li.done:before {
+  content: '✔';
+}
+ul.todoList li.done {
+  color: #99cc77;
+}

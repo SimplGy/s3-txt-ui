@@ -19,6 +19,9 @@ module.exports = {
             "warn",
             2
         ],
+        "no-debugger": [
+          "warn"
+        ],
         "no-console": [
           "off"
         ],
@@ -27,12 +30,15 @@ module.exports = {
             "unix"
         ],
         "quotes": [
-            "error",
+            "off",
             "single"
         ],
         "semi": [
             "error",
             "always"
+        ],
+        "no-unused-vars": [
+          "warn"
         ]
     }
 };

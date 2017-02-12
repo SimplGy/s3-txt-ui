@@ -13,7 +13,7 @@ class FullScreenFile extends Component {
           {
           // TODO: learn what lifecycle method to do props parsing in so that this doesn't parse N lines every render
           getLinesFromText(file.contents).map(
-            (line, idx) => <p key={idx} title={"line " + idx}>{line}</p>
+            (line, idx) => <p key={idx} title={'line ' + idx}>{line}</p>
           )}
         </article>
       </div>
@@ -24,7 +24,7 @@ class FullScreenFile extends Component {
 
 const getLinesFromText = (text) => {
   return text.split(/\r?\n/); // both windows and unix newlines
-}
+};
 
 
 FullScreenFile.propTypes = {

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ListOfFiles from './vertical/fileList/ListOfFiles';
 import FullScreenFile from './vertical/fileList/FullScreenFile';
-import urlToAction from './horizontal/urlParser'
+import urlToAction from './horizontal/urlParser';
 
 class App extends Component {
 
@@ -14,18 +14,18 @@ class App extends Component {
   }
 
   onFileSelected(file) {
-    console.log("onFileSelected. this:", this);
+    console.log('onFileSelected. this:', this);
     this.setState({ selectedFile: file });
   }
 
   componentWillUpdate(nextProps, nextState) {
-    console.log("App componentWillUpdate", { nextProps, nextState });
+    console.log('App componentWillUpdate', { nextProps, nextState });
   }
 
   componentDidMount() {
-    console.log("App #componentDidMount");
+    console.log('App #componentDidMount');
     let action = urlToAction(window.location.pathname);
-    console.log(action)
+    console.log(action);
   }
 
   render() {

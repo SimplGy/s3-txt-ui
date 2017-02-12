@@ -1,5 +1,5 @@
 const files = [
-    { name: "recipes.md", contents: `
+  { name: 'recipes.md', contents: `
   ## wok dish
 
   Rice noodles
@@ -15,8 +15,8 @@ const files = [
 
   Chicken breasts on top of mashed potatoes under apple slices.
   Topped with Cambert/Brie and balsamic glaze. Baked.`
-    },
-    { name: "RV Upgrades.md", contents: `
+  },
+  { name: 'RV Upgrades.md', contents: `
   Meant to help me think about long-term goals, prioritization, and effort.
 
   Eventually I can add plan specifics, estimate effort, and so on.
@@ -54,7 +54,7 @@ const files = [
   * Electric: Shore power input and designated outlet in the van
 
 `   },
-    { name: "Studying CS and JS Fundamentals.md", contents: `
+  { name: 'Studying CS and JS Fundamentals.md', contents: `
 o Review C's codebase. Remind myself what it's like to do these things in a large app:
   o write a test
   o depend on other objects
@@ -66,7 +66,7 @@ o deep: do a js visualization of k-means. https://en.wikipedia.org/wiki/K-means_
   o Represent positions on a screen
   o represent polygons that draw the grouping
 `   },
-    { name: "_To Do.md", contents: `
+  { name: '_To Do.md', contents: `
 x Setting Up a Productive React Development Environment
 	x add Emmet to atom -- https://gist.github.com/mxstbr/361ddb22057f0a01762240be209321f0
 	get emmet and language-babel packages
@@ -86,6 +86,6 @@ x Make a react app that displays a list of selectable files, show detail when yo
 	x when a file is clicked, provide that object to a parent component
 	x Show file details on click and have a back link
     `
-    }
-]
+  }
+];
 export default files;

@@ -1,0 +1,15 @@
+.fileDetails { padding: 10px; }
+
+.fileDetails h1 { padding: 0; margin: 0; margin-bottom: 10px; }
+
+.fileDetails h1 small { float: right; font-size: 12px; color: #999; margin-top: 20px; font-weight: normal; }
+
+.fileDetails article { background: #f9f9f7; border-radius: 5px; padding: 5px 0; font-size: 14px; line-height: 18.2px; }
+
+.fileDetails article p { min-height: 18.2px; margin: 0; padding: 0 10px; white-space: pre-wrap; }
+
+.fileDetails article p:hover { background-color: rgba(0, 0, 0, 0.03); }
+
+.fileDetails .backLink { display: inline-block; text-decoration: none; margin-bottom: 10px; }
+
+.fileDetails .backLink:hover { text-decoration: underline; }

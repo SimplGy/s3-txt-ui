@@ -1,6 +1,6 @@
 import { createStore } from 'redux';
 import ACTIONS from './ACTIONS';
-import { SCREENS } from './routing';
+import { SCREENS } from './router';
 
 
 function reducer(state, action = {}) {
@@ -10,9 +10,9 @@ function reducer(state, action = {}) {
     // https://github.com/reactjs/redux/issues/1528
     // https://medium.com/javascript-and-opinions/redux-side-effects-and-you-66f2e0842fc3#.6npgu8hf9
     if (action.payload.screen === SCREENS.oneFile) {
-      window.location.hash = `/files/${action.payload.itemId}`;
+      // window.location.hash = `/files/${action.payload.itemId}`;
     } else {
-      window.location.hash = `/`;
+      // window.location.hash = `/`;
     }
     return Object.assign({}, state, action.payload);
   default: return state;

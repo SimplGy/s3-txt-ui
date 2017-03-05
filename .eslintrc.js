@@ -3,7 +3,11 @@ module.exports = {
         "browser": true,
         "es6": true
     },
-    "extends": "eslint:recommended",
+    "extends": [
+      "react-app",
+      "plugin:import/errors",
+      "plugin:import/warnings"
+    ],
     "parserOptions": {
         "ecmaFeatures": {
             "experimentalObjectRestSpread": true,
@@ -19,6 +23,7 @@ module.exports = {
             "warn",
             2
         ],
+        "react/prop-types": [ "off" ],
         "no-debugger": [
           "warn"
         ],
@@ -39,6 +44,7 @@ module.exports = {
         ],
         "no-unused-vars": [
           "warn"
-        ]
+        ],
+        "no-use-before-define": ["off"]
     }
 };

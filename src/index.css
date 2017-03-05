@@ -4,11 +4,23 @@ body {
   font-family: sans-serif;
 }
 
+hr {
+  height: 0;
+  border: 0;
+  border-top: 1px solid #ccc;
+  margin: 10px 0;
+}
+
+.app {
+  padding: 10px;
+}
+
 ul.todoList {
   padding-left: 20px;
   text-indent: 2px;
   list-style: none;
   list-style-position: outside;
+  font-size: 75%;
 }
 ul.todoList li:before {
   content: '☐';
@@ -19,5 +31,5 @@ ul.todoList li.done:before {
   content: '✔';
 }
 ul.todoList li.done {
-  color: #99cc77;
+  color: #5b4;
 }

@@ -16,6 +16,7 @@ class FileDetails extends Component {
     };
     this.onChangeText = this.onChangeText.bind(this);
     this.saveFile = this.saveFile.bind(this);
+    this.onKeyPress = this.onKeyPress.bind(this);
   }
 
   componentWillMount() {
@@ -23,26 +24,27 @@ class FileDetails extends Component {
   }
 
   componentDidMount() {
-    const onPress = (evt) => {
-      if ((evt.ctrlKey || evt.metaKey) && evt.key === 's') {
-        evt.preventDefault();
-        evt.stopPropagation();
-        this.saveFile();
-        return false;
-      } else {
-        return true;
-      }
-    };
-    this.stopListening = ReactDOM.findDOMNode(this).addEventListener('keypress', onPress, false);
+    this.stopListening = ReactDOM.findDOMNode(this).addEventListener('keypress', this.onKeyPress, false);
   }
 
   componentWillUnmount() {
-    this.stopListening();
+    ReactDOM.findDOMNode(this).removeEventListener('keypress', this.onKeyPress);
   }
 
   componentDidUpdate(prevProps, prevState) {
     if(prevProps.fileKey !== this.props.fileKey) {
       this.load(this.props.fileKey);
+    }
+  }
+
+  onKeyPress(evt) {
+    if ((evt.ctrlKey || evt.metaKey) && evt.key === 's') {
+      evt.preventDefault();
+      evt.stopPropagation();
+      this.saveFile();
+      return false;
+    } else {
+      return true;
     }
   }
 

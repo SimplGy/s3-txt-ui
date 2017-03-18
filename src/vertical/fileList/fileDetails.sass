@@ -1,31 +1,68 @@
+body.screen-oneFile
+  overflow: hidden // handle all scrolling in the textarea
+
 .fileDetails
-  padding: 10px
-  h1
-    padding: 0
-    margin: 0
-    margin-bottom: 10px
-    small
+
+  header
+    padding: 10px
+    height: 50px
+    box-sizing: border-box
+    overflow: auto
+    border-bottom: 1px dotted #ddd
+    h1
+      padding: 0
+      margin: 0
+      font-size: 24px
+      line-height: 1.1
+      font-weight: 100
+      color: #666
+    p
+      margin: 0
+    .muted
       float: right
-      font-size: 12px
-      color: #999
-      margin-top: 20px
-      font-weight: normal
-  article
+      margin-top: 7px
+
+    .backLink
+      display: inline-block
+      text-decoration: none
+      margin-top: 3px
+      float: left
+      margin-right: 10px
+      background: #eee
+      border-radius: 3px
+      padding: 1px 3px
+      color: #666
+      &:hover
+        text-decoration: none
+        background: #e7e7e7
+        color: #000
+
+  .editable
+    white-space: pre-wrap
+    margin-bottom: 100px
+    font-family: monospace
+    &:focus
+      outline: none
+
+  .textWrapper
+    position: absolute
+    top: 50px
+    right: 0
+    bottom: 0
+    left: 0
+
+  textarea:focus
+    outline: none
+  textarea
+    width: 100%
+    height: 100%
+    resize: none
+    box-sizing: border-box // do not overflow parent padding
+    border: none
+    min-height: 300px
     background: #f9f9f7
-    border-radius: 5px
-    padding: 5px 0
+    padding: 10px
+
     font-size: 14px
     line-height: 14px * 1.3
-    p
-      min-height: 14px * 1.3
-      margin: 0
-      padding: 0 10px
-      white-space: pre-wrap
-      &:hover
-        background-color: rgba(0,0,0,0.03)
-  .backLink
-    display: inline-block
-    text-decoration: none
-    margin-bottom: 10px
-    &:hover
-      text-decoration: underline
+    font-family: monospace

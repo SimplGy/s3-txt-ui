@@ -4,6 +4,6 @@ body {
   font-family: sans-serif;
 }
 
-.app {
-  padding: 10px;
+.muted {
+  color: #999
 }

@@ -14,7 +14,7 @@ const toAppFileFromAwsDescriptor = (_ = {}) => ({
 });
 
 const toAppFileFromAwsFile = (_ = {}) => {
-  const contents = String(_.Body);
+  const contents = String(_.Body); // Incredibly, this converts a UInt8Array of chars into a String... TODO: reliable? correct?
   return { contents };
 };
 
@@ -25,7 +25,6 @@ function get(id) {
 }
 
 function getOne(id) {
-  console.log(`getOne(${id})`);
   let willGet = new Promise(function(resolve, reject) {
     const ResponseContentType = 'text/plain';
     s3.getObject({ResponseContentType, Bucket, Key: id}, function(err, data) {
@@ -34,7 +33,7 @@ function getOne(id) {
         reject(err);
         return;
       }
-      console.log('s3.getObject', data);
+      // console.log('s3.getObject', data);
       resolve(toAppFileFromAwsFile(data));
     });
   });
@@ -42,7 +41,6 @@ function getOne(id) {
 }
 
 function getAll() {
-  console.log(`getAll()`);
   let willGet = new Promise(function(resolve, reject) {
     s3.listObjects({ MaxKeys, Prefix, Delimiter }, function (err, data) {
       if (err) {
@@ -50,7 +48,7 @@ function getAll() {
         reject(err);
         return;
       }
-      console.log('s3.listObjects', data);
+      // console.log('s3.listObjects', data);
       const fileDescriptors = data.Contents.map(toAppFileFromAwsDescriptor);
       resolve(fileDescriptors);
     });
@@ -60,4 +58,7 @@ function getAll() {
 
 function save() {}
 
+
+export { Bucket as awsBucket };
+export { region as awsRegion };
 export default { get, save };

@@ -16,6 +16,28 @@ You need to configure the application to point to your s3 bucket. to do this, cr
 
     npm start
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ---
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).

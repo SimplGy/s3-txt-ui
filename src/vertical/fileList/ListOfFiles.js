@@ -39,39 +39,7 @@ class ListOfFiles extends Component {
         </ul>
         <br/>
         <small className="muted">Connected to: {awsUrl}</small>
-
-        <br/><br/><br/>
-
-        <small>TODO</small>
-        <TodoList>
-          <Todo done>First let's grab the url in componentDidMount -> window.location.pathname</Todo>
-          <Todo done>Then we'll turn it in to a meaningful action with urlToAction</Todo>
-          <Todo done>Include Redux</Todo>
-          <Todo done>send redux the url changed action</Todo>
-          <Todo done>turn the action into a useful state</Todo>
-          <Todo done>handle a filename that isn't found</Todo>
-          <Todo done>observe the back/forward buttons and react appropriately</Todo>
-          <Todo done>support reading data from an s3 bucket</Todo>
-          <Todo done>get file details from s3 bucket</Todo>
-          <Todo done>turn `size` into a char count (assuming plain text), and count words</Todo>
-          <Todo done>Show the bucket name you're connected to</Todo>
-          <Todo done>Make the text appear editable and scroll nicely</Todo>
-          <Todo done>Add some simple markdown syntax highlighting (that doesn't change char positions) -- tried codemirror via react-md-editor and ace and didn't like either</Todo>
-          <Todo>If props.file.content != editableText, show a save button. Enable cmd+s for the button</Todo>
-          <Todo>Have the save button actually persist to the server</Todo>
-          <Todo>cache file list and file contents on device; if old, greedy-invalidate. if not fresh, lazy-invalidate</Todo>
-        </TodoList>
-
-        <small>Nice to have:</small>
-        <TodoList>
-          <Todo>Live refresh the text, mixing in the current user's edits intelligently (2-way-sync challenge)</Todo>
-          <Todo>gui configurable s3 bucket target & key</Todo>
-          <Todo>Integrate `Flow` with this project as a learning experience</Todo>
-        </TodoList>
-
       </div>
-
-
     );
   }
 

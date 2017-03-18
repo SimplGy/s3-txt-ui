@@ -16,19 +16,30 @@ You need to configure the application to point to your s3 bucket. to do this, cr
 
     npm start
 
+## Todo list
 
+- [x] Add some simple markdown syntax highlighting (that doesn't change char positions) -- tried codemirror via react-md-editor and ace and didn't like either
+- [x] First let's grab the url in componentDidMount -> window.location.pathname
+- [x] Then we'll turn it in to a meaningful action with urlToAction
+- [x] Include Redux
+- [x] send redux the url changed action
+- [x] turn the action into a useful state
+- [x] handle a filename that isn't found
+- [x] observe the back/forward buttons and react appropriately
+- [x] support reading data from an s3 bucket
+- [x] get file details from s3 bucket
+- [x] turn `size` into a char count (assuming plain text), and count words
+- [x] Show the bucket name you're connected to
+- [x] Make the text appear editable and scroll nicely
+- [ ] If props.file.content != editableText, show a save button. Enable cmd+s for the button
+- [ ] Have the save button actually persist to the server
+- [ ] cache file list and file contents on device; if old, greedy-invalidate. if not fresh, lazy-invalidate
 
+## Nice to Have
 
-
-
-
-
-
-
-
-
-
-
+- [ ] Live refresh the text, mixing in the current user's edits intelligently (2-way-sync challenge)
+- [ ] gui configurable s3 bucket target & key
+- [ ] Integrate `Flow` with this project as a learning experience
 
 
 

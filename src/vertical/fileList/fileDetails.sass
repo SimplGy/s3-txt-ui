@@ -3,6 +3,23 @@ body.screen-oneFile
 
 .fileDetails
 
+  .saveBtn
+    position: absolute
+    bottom: 10px
+    right: 10px
+    padding: 5px 15px
+    padding-bottom: 7px // valign fudge
+    background: #33993d
+    color: white
+    border: none
+    cursor: pointer
+    font-size: 16px
+    border: 2px solid #f9f9f7
+    border-radius: 1px
+    &:hover
+      background: lighten(#33993d, 5)
+
+
   header
     padding: 10px
     height: 50px
@@ -62,6 +79,7 @@ body.screen-oneFile
     min-height: 300px
     background: #f9f9f7
     padding: 10px
+    padding-bottom: 50px // extra room for save button and comfortable bottom of screen
 
     font-size: 14px
     line-height: 14px * 1.3

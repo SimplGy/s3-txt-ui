@@ -1,5 +1,9 @@
 body.screen-oneFile { overflow: hidden; }
 
+.fileDetails .saveBtn { position: absolute; bottom: 10px; right: 10px; padding: 5px 15px; padding-bottom: 7px; background: #33993d; color: white; border: none; cursor: pointer; font-size: 16px; border: 2px solid #f9f9f7; border-radius: 1px; }
+
+.fileDetails .saveBtn:hover { background: #39ac45; }
+
 .fileDetails header { padding: 10px; height: 50px; box-sizing: border-box; overflow: auto; border-bottom: 1px dotted #ddd; }
 
 .fileDetails header h1 { padding: 0; margin: 0; font-size: 24px; line-height: 1.1; font-weight: 100; color: #666; }
@@ -20,4 +24,4 @@ body.screen-oneFile { overflow: hidden; }
 
 .fileDetails textarea:focus { outline: none; }
 
-.fileDetails textarea { width: 100%; height: 100%; resize: none; box-sizing: border-box; border: none; min-height: 300px; background: #f9f9f7; padding: 10px; font-size: 14px; line-height: 18.2px; font-family: monospace; }
+.fileDetails textarea { width: 100%; height: 100%; resize: none; box-sizing: border-box; border: none; min-height: 300px; background: #f9f9f7; padding: 10px; padding-bottom: 50px; font-size: 14px; line-height: 18.2px; font-family: monospace; }

@@ -31,12 +31,13 @@ You need to configure the application to point to your s3 bucket. to do this, cr
 - [x] turn `size` into a char count (assuming plain text), and count words
 - [x] Show the bucket name you're connected to
 - [x] Make the text appear editable and scroll nicely
-- [ ] If props.file.content != editableText, show a save button. Enable cmd+s for the button
+- [x] If props.file.content != editableText, show a save button. Enable cmd+s for the button
 - [ ] Have the save button actually persist to the server
 - [ ] cache file list and file contents on device; if old, greedy-invalidate. if not fresh, lazy-invalidate
 
 ## Nice to Have
 
+- [ ] override cmd+s to save on chrome (got ctrl+s to work, but having trouble blocking browser behavior with cmd)
 - [ ] Live refresh the text, mixing in the current user's edits intelligently (2-way-sync challenge)
 - [ ] gui configurable s3 bucket target & key
 - [ ] Integrate `Flow` with this project as a learning experience

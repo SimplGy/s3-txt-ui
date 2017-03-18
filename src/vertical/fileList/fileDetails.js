@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import router from '../../horizontal/router';
 import './fileDetails.css';
@@ -14,14 +15,32 @@ class FileDetails extends Component {
       editableText: '...',
     };
     this.onChangeText = this.onChangeText.bind(this);
+    this.saveFile = this.saveFile.bind(this);
   }
 
   componentWillMount() {
     this.load(this.props.fileKey);
   }
 
+  componentDidMount() {
+    const onPress = (evt) => {
+      if ((evt.ctrlKey || evt.metaKey) && evt.key === 's') {
+        evt.preventDefault();
+        evt.stopPropagation();
+        this.saveFile();
+        return false;
+      } else {
+        return true;
+      }
+    };
+    this.stopListening = ReactDOM.findDOMNode(this).addEventListener('keypress', onPress, false);
+  }
+
+  componentWillUnmount() {
+    this.stopListening();
+  }
+
   componentDidUpdate(prevProps, prevState) {
-    console.log('fileDetails #componentDidUpdate. this.props.fileKey', this.props.fileKey);
     if(prevProps.fileKey !== this.props.fileKey) {
       this.load(this.props.fileKey);
     }
@@ -42,8 +61,16 @@ class FileDetails extends Component {
     this.setState({ editableText });
   }
 
+  saveFile(){
+    console.log('saveFile()');
+  }
+
   render() {
     const { name, file, editableText } = { ...this.props, ...this.state };
+    const saveButton = editableText !== file.contents
+      ? <button className="saveBtn" onClick={this.saveFile}>save</button>
+      : null;
+
     return (
       <div className="fileDetails">
 
@@ -60,6 +87,9 @@ class FileDetails extends Component {
         <div className="textWrapper">
           <textarea value={editableText} onChange={this.onChangeText} placeholder="This file is empty." />
         </div>
+
+        {saveButton}
+
       </div>
     );
   }

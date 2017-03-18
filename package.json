@@ -16,8 +16,7 @@
     "react-dom": "^15.4.2",
     "react-redux": "^5.0.3",
     "redux": "^3.6.0",
-    "slug": "^0.9.1",
-    "styled-components": "^1.4.4"
+    "slug": "^0.9.1"
   },
   "scripts": {
     "start": "react-scripts start",

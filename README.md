@@ -10,7 +10,8 @@ Maybe later support text editing
 
 ## Set Up
 
-You need to configure the application to point to your s3 bucket. to do this, create a file `src/.s3cfg.js`. You can use `src/.s3cfg-EXAMPLE.js` as a starting point.
+1. Create an AWS S3 bucket to use as a source of text files. For it to work with this application, you'll have to [configure permissions](http://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/getting-started-browser.html#getting-started-browser-iam-role) and [enable CORS](http://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/getting-started-browser.html#getting-started-browser-create-bucket). If you've never used S3 this project might be a bit difficult to set up, but I believe you can do it.
+2. Configure the application to point to an s3 bucket that hosts your text files. to do this, create a file `src/.s3cfg.js`. You can use `src/.s3cfg-EXAMPLE.js` as a starting point.
 
 ## Start Developing
 
@@ -33,6 +34,7 @@ You need to configure the application to point to your s3 bucket. to do this, cr
 - [x] Make the text appear editable and scroll nicely
 - [x] If props.file.content != editableText, show a save button. Enable cmd+s for the button
 - [ ] Have the save button actually persist to the server
+- [ ] Quicly build a functional way to sync a system folder with the s3 bucket (command line npm module?)
 - [ ] cache file list and file contents on device; if old, greedy-invalidate. if not fresh, lazy-invalidate
 
 ## Nice to Have

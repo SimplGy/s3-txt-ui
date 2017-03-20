@@ -33,14 +33,15 @@ Maybe later support text editing
 - [x] Show the bucket name you're connected to
 - [x] Make the text appear editable and scroll nicely
 - [x] If props.file.content != editableText, show a save button. Enable cmd+s for the button
-- [ ] Have the save button actually persist to the server
-- [ ] Quicly build a functional way to sync a system folder with the s3 bucket (command line npm module?)
-- [ ] cache file list and file contents on device; if old, greedy-invalidate. if not fresh, lazy-invalidate
+- [x] Have the save button actually persist to the server
+- [x] override cmd+s to save on chrome (got ctrl+s to work, but having trouble blocking browser behavior with cmd) -- use `keydown` instead of `keypress`
+- [ ] Quickly build a functional way to sync a system folder with the s3 bucket (command line npm module?)
+- [ ] Try on mobile, fix any layout problems
 
 ## Nice to Have
 
-- [ ] override cmd+s to save on chrome (got ctrl+s to work, but having trouble blocking browser behavior with cmd)
 - [ ] Live refresh the text, mixing in the current user's edits intelligently (2-way-sync challenge)
+- [ ] cache file list and file contents on device; if old, greedy-invalidate. if not fresh, lazy-invalidate
 - [ ] gui configurable s3 bucket target & key
 - [ ] Integrate `Flow` with this project as a learning experience
 

@@ -5,6 +5,7 @@ import { charCountFromSize } from '../fileOps';
 AWS.config.region = region;
 AWS.config.update({ accessKeyId, secretAccessKey });
 const s3 = new AWS.S3({ apiVersion: '2006-03-01', params: { Bucket } });
+const ContentType = 'text/markdown';
 
 const toAppFileFromAwsDescriptor = (_ = {}) => ({
   key: _.Key,
@@ -13,28 +14,40 @@ const toAppFileFromAwsDescriptor = (_ = {}) => ({
   charCount: charCountFromSize(_.Size)
 });
 
-const toAppFileFromAwsFile = (_ = {}) => {
-  const contents = String(_.Body); // Incredibly, this converts a UInt8Array of chars into a String... TODO: reliable? correct?
-  return { contents };
-};
+function getAWSInfo() {
+  // s3.getBucketAcl({Bucket}, function(err, data) {
+  //   if (err) console.warn(err, err.stack); // an error occurred
+  //   else     console.info('getBucketAcl', data);           // successful response
+  // });
+  s3.getBucketCors({Bucket}, function(err, data) {
+    if (err) console.warn(err, err.stack); // an error occurred
+    else     console.info('AWS Bucket CORS configuration:', data);
+  });
+}
+getAWSInfo();
 
 function get(id) {
   return id == null
     ? getAll()
-    : getOne(id);
+    : getFileContents(id);
 }
 
-function getOne(id) {
+function getFileContents(id) {
   let willGet = new Promise(function(resolve, reject) {
     const ResponseContentType = 'text/plain';
-    s3.getObject({ResponseContentType, Bucket, Key: id}, function(err, data) {
+    const params = {
+      ResponseContentType, Bucket,
+      Key: id,
+      IfModifiedSince: Date.now(), // don't allow caching. TODO: more complex strategy that knows when our client last modified it? ETags?
+    };
+    s3.getObject(params, function(err, data) {
       if (err) {
         console.log(err, err.stack);
         reject(err);
         return;
       }
-      // console.log('s3.getObject', data);
-      resolve(toAppFileFromAwsFile(data));
+      const fileContents = String(data.Body); // Incredibly, this converts a UInt8Array of chars into a String... TODO: reliable? correct?
+      resolve(fileContents);
     });
   });
   return willGet;
@@ -56,7 +69,23 @@ function getAll() {
   return willGet;
 }
 
-function save() {}
+// Given a file object, persist to server.
+// Return a promise. Resolve with updated file from server.
+function save(id, contents) {
+  let willSave = new Promise(function(resolve, reject) {
+    if (contents == null) { return reject("You can't save without `contents`"); }
+    s3.putObject({ Bucket, ContentType, Key: id, Body: contents }, function(err, data) {
+      if (err) {
+        console.warn(err);
+        reject(err);
+        return;
+      }
+      resolve(contents); // data from AWS is an empty object, so just return the originally saved contents. AWS only succeeds if the save was complete
+    });
+
+  });
+  return willSave;
+}
 
 
 export { Bucket as awsBucket };

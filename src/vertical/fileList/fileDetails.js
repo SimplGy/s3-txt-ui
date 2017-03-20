@@ -11,12 +11,14 @@ class FileDetails extends Component {
   constructor() {
     super();
     this.state = {
-      file: {},
+      isSaving: false,
+      originalText: null,
       editableText: '...',
     };
     this.onChangeText = this.onChangeText.bind(this);
-    this.saveFile = this.saveFile.bind(this);
+    this.saveFileContents = this.saveFileContents.bind(this);
     this.onKeyPress = this.onKeyPress.bind(this);
+    this.gotText = this.gotText.bind(this);
   }
 
   componentWillMount() {
@@ -24,11 +26,11 @@ class FileDetails extends Component {
   }
 
   componentDidMount() {
-    this.stopListening = ReactDOM.findDOMNode(this).addEventListener('keypress', this.onKeyPress, false);
+    this.stopListening = ReactDOM.findDOMNode(this).addEventListener('keydown', this.onKeyPress);
   }
 
   componentWillUnmount() {
-    ReactDOM.findDOMNode(this).removeEventListener('keypress', this.onKeyPress);
+    ReactDOM.findDOMNode(this).removeEventListener('keydown', this.onKeyPress);
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -41,7 +43,7 @@ class FileDetails extends Component {
     if ((evt.ctrlKey || evt.metaKey) && evt.key === 's') {
       evt.preventDefault();
       evt.stopPropagation();
-      this.saveFile();
+      this.saveFileContents();
       return false;
     } else {
       return true;
@@ -50,12 +52,7 @@ class FileDetails extends Component {
 
   load(fileKey) {
     if (fileKey == null) { return; } // no key, so we haven't loaded the set of file names yet
-    files.get(fileKey).then(
-      file => {
-        const editableText = file.contents;
-        this.setState({ file, editableText });
-      }
-    );
+    files.get(fileKey).then(this.gotText);
   }
 
   onChangeText(evt) {
@@ -63,14 +60,27 @@ class FileDetails extends Component {
     this.setState({ editableText });
   }
 
-  saveFile(){
-    console.log('saveFile()');
+  saveFileContents() {
+    this.setState({ isSaving: true });
+    files.save(this.props.fileKey, this.state.editableText)
+      .then(this.gotText)
+      .catch(console.warn)
+      .then( _ => this.setState({ isSaving: false }) );
+  }
+
+  // When we get text from the server, either as the result of a fetch or save
+  gotText(text) {
+    const originalText = text;
+    const editableText = text; // copy out string "value"
+    this.setState({ originalText, editableText });
   }
 
   render() {
-    const { name, file, editableText } = { ...this.props, ...this.state };
-    const saveButton = editableText !== file.contents
-      ? <button className="saveBtn" onClick={this.saveFile}>save</button>
+    const { isSaving, name, originalText, editableText } = { ...this.props, ...this.state };
+    const saveButton = isSaving || editableText !== originalText
+      ? <button className={isSaving ? 'saveBtn saving' : 'saveBtn'}
+          disabled={isSaving}
+          onClick={()=>this.saveFileContents(editableText)} title="Save: [Ctrl+S]">{isSaving ? "..." : "save"}</button>
       : null;
 
     return (
@@ -78,7 +88,7 @@ class FileDetails extends Component {
 
         <header>
           <a href="#" className="backLink" onClick={ router.go.list }>&larr; files</a>
-          <small className="muted">{wordCountFromText(file.contents)} words</small>
+          <small className="muted">{wordCountFromText(editableText)} words</small>
           <h1>{name}</h1>
         </header>
 
@@ -87,7 +97,7 @@ class FileDetails extends Component {
         </article> */}
 
         <div className="textWrapper">
-          <textarea value={editableText} onChange={this.onChangeText} placeholder="This file is empty." />
+          <textarea autoFocus value={editableText} onChange={this.onChangeText} placeholder="This file is empty." />
         </div>
 
         {saveButton}

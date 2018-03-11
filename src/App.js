@@ -37,7 +37,7 @@ class App extends Component {
       screen = <FileDetails name={file.name} fileKey={file.key} />;
       break;
     default:
-      screen = <ListOfFiles files={this.state.files} />;
+      screen = <ListOfFiles files={this.state.files} prefix={this.props.itemSlug} />;
     }
 
     // Assign a classname to the body tag for each screen (needed to override scrolling behavior)

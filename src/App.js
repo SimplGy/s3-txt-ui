@@ -10,12 +10,9 @@ import files from './horizontal/api/files';
 
 class App extends Component {
 
-  constructor(){
-    super();
-    this.state = {
-      files: []
-    };
-  }
+  state = {
+    files: []
+  };
 
   componentDidMount() {
     const dispatch = this.props.dispatch; // avoid closing over `this` later

@@ -14,3 +14,4 @@ build
 .env
 .s3cfg.js
 npm-debug.log
+.aws.json

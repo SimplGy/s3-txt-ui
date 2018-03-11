@@ -4,23 +4,18 @@ import router from '../../horizontal/router';
 import './listOfFiles.css';
 import { awsRegion, awsBucket } from '../../horizontal/api/files';
 
-const OneFile = _ => (
+const OneFile = ({action, file}) => (
   <li className="oneFile">
-    <a href="#" onClick={_.action}>{_.file.name} <small>{_.file.charCount} b</small></a>
+    <a href="#" onClick={action}>{file.name} <small>{file.charCount} b</small></a>
   </li>
 );
 
 class ListOfFiles extends Component {
 
-  constructor() {
-    super();
-    this.onClickFile = this.onClickFile.bind(this);
-  }
-
-  onClickFile(e, file) {
+  onClickFile = (e, file) => {
     e.preventDefault();
     router.go.oneFile( file.key );
-  }
+  };
 
   render() {
     let rows = this.props.files.map(

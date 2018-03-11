@@ -20,15 +20,16 @@ class App extends Component {
   componentDidMount() {
     const dispatch = this.props.dispatch; // avoid closing over `this` later
     router.observeHash({ broadcastTo: dispatch });
-    // get files. we need the list of files in order to map a slug back to a file key, so even an initial load of a file details screen needs the files array
-    this.getFiles();
+
+    files.corsHealthCheck() // Make sure CORs is working, and log out details if so
+      .then(this.getFiles); // get files. we need the list of files in order to map a slug back to a file key, so even an initial load of a file details screen needs the files array
   }
 
-  getFiles() {
+  getFiles = () => {
     files.get().then(
       (files) => this.setState({ files })
     );
-  }
+  };
 
   render() {
     let screen;

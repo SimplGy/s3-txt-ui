@@ -14,23 +14,26 @@ const toAppFileFromAwsDescriptor = (_ = {}) => ({
   charCount: charCountFromSize(_.Size)
 });
 
-function getAWSInfo() {
-  // s3.getBucketAcl({Bucket}, function(err, data) {
-  //   if (err) console.warn(err, err.stack); // an error occurred
-  //   else     console.info('getBucketAcl', data);           // successful response
-  // });
-  s3.getBucketCors({Bucket}, function(err, data) {
-    if (err) console.warn(err, err.stack); // an error occurred
-    else     console.info('AWS Bucket CORS configuration:', data);
-  });
-}
-getAWSInfo();
 
-function get(id) {
-  return id == null
+function corsHealthCheck() {
+  let will = new Promise(function(resolve, reject) {
+    s3.getBucketCors({Bucket}, (err, data) => {
+      if (err) {
+        console.warn("Error with `s3.getBucketCors()`. Please ensure that CORS enabled for this bucket. See this page for help:\nhttps://docs.aws.amazon.com/AmazonS3/latest/dev/cors.html#how-do-i-enable-cors", err);
+        reject(err);
+      } else {
+        console.info('AWS Bucket CORS configuration:', data);
+        resolve(data);
+      }
+    });
+  });
+  return will;
+}
+
+const get = (id) =>
+  id == null
     ? getAll()
     : getFileContents(id);
-}
 
 function getFileContents(id) {
   let willGet = new Promise(function(resolve, reject) {
@@ -46,7 +49,7 @@ function getFileContents(id) {
         reject(err);
         return;
       }
-      const fileContents = String(data.Body); // Incredibly, this converts a UInt8Array of chars into a String... TODO: reliable? correct?
+      const fileContents = String(data.Body);
       resolve(fileContents);
     });
   });
@@ -90,4 +93,4 @@ function save(id, contents) {
 
 export { Bucket as awsBucket };
 export { region as awsRegion };
-export default { get, save };
+export default { get, save, corsHealthCheck };

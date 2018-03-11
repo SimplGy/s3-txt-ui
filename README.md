@@ -27,6 +27,8 @@ Or run it as a one-time compilation:
 
     npm run sass-once
 
+If you add a brand-new sass file, make sure you `import` it somewhere (eg: index.js' `import './index.css';`)
+
 ## Todo list
 
 - [x] Add some simple markdown syntax highlighting (that doesn't change char positions) -- tried codemirror via react-md-editor and ace and didn't like either
@@ -46,10 +48,13 @@ Or run it as a one-time compilation:
 - [x] Have the save button actually persist to the server
 - [x] override cmd+s to save on chrome (got ctrl+s to work, but having trouble blocking browser behavior with cmd) -- use `keydown` instead of `keypress`
 - [x] Quickly build a functional way to sync a system folder with the s3 bucket (command line npm module?)
-- [ ] Try on mobile, fix any layout problems
-- [ ] Have clear error messages for missing bucket/key/secret
 - [x] CORS must be enabled on the bucket/resource. Have a clear warning on the front end when we detect that this is the problem
 - [x] Add a client-side search filter
+- [ ] Support navigable folders
+- [ ] Have clear error messages for missing bucket/key/secret
+- [ ] Try on mobile, fix any layout problems
+- [ ] Infinite scroll for long file lists
+- [ ] Use the same header for individual file and file list
 
 ## Nice to Have
 

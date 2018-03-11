@@ -1,13 +1,52 @@
-.listOfFiles { padding: 10px; }
+.listOfFiles {
+  padding: 10px; }
 
-.listOfFiles h2 { padding: 0; margin: 0; margin-bottom: 10px; }
+.listOfFiles header {
+  border-bottom: 1px dotted #999;
+  padding: 10px 0;
+  margin-bottom: 10px; }
 
-.listOfFiles ul { list-style: none; margin: 0; padding: 0; }
+.listOfFiles header h2, .listOfFiles header input {
+  vertical-align: middle; }
 
-.listOfFiles li { list-style: none; margin: 0 -3px; padding: 0; }
+.listOfFiles h2 {
+  display: inline-block;
+  margin-right: 10px; }
 
-.listOfFiles a { display: block; padding: 3px; color: #222; text-decoration: none; }
+.listOfFiles input[type=search] {
+  height: 28px;
+  line-height: 28px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  padding: 0 3px; }
 
-.listOfFiles a:hover { background: rgba(0, 0, 0, 0.05); text-decoration: underline; }
+.listOfFiles input[type=search]:focus {
+  border: 1px solid #999; }
 
-.listOfFiles a small { float: right; color: #999; }
+.listOfFiles ul {
+  list-style: none;
+  margin: 0;
+  padding: 0; }
+
+.listOfFiles li {
+  list-style: none;
+  margin: 0 -3px;
+  padding: 0; }
+
+.listOfFiles a {
+  display: block;
+  padding: 5px 3px;
+  color: #333;
+  text-decoration: none; }
+
+.listOfFiles a:hover {
+  background: rgba(0, 0, 0, 0.02);
+  color: black;
+  border-radius: 3px;
+  border-left: 3px solid lightblue;
+  border-right: 3px solid lightblue;
+  margin: 0 -3px; }
+
+.listOfFiles a small {
+  float: right;
+  color: #999; }

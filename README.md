@@ -15,7 +15,17 @@ Maybe later support text editing
 
 ## Start Developing
 
+Run the development environment:
+
     npm start
+
+SASS isn't complied automaticaly. When working on styles, run the watcher:
+
+    npm run sass
+    
+Or run it as a one-time compilation:
+
+    npm run sass-once
 
 ## Todo list
 
@@ -39,6 +49,7 @@ Maybe later support text editing
 - [ ] Try on mobile, fix any layout problems
 - [ ] Have clear error messages for missing bucket/key/secret
 - [x] CORS must be enabled on the bucket/resource. Have a clear warning on the front end when we detect that this is the problem
+- [x] Add a client-side search filter
 
 ## Nice to Have
 

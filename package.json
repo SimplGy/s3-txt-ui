@@ -7,6 +7,7 @@
     "eslint": "^3.15.0",
     "eslint-import-resolver-node": "^0.3.0",
     "eslint-plugin-react": "^6.9.0",
+    "node-sass": "^4.8.0",
     "react-scripts": "0.8.5"
   },
   "dependencies": {
@@ -22,6 +23,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
+    "sass": "node-sass ./src -wo ./src --compact",
+    "sass-once": "node-sass ./src -wo ./src --compact",
     "eject": "react-scripts eject"
   }
 }

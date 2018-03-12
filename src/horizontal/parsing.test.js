@@ -5,6 +5,7 @@ const {
   isFileHere,
   fileNameHere,
   folderNameHere,
+  isFolder,
 } = require('./parsing');
 
 
@@ -33,6 +34,10 @@ describe('prefixFrom(url)', () => {
   test('removes one (and only one) leading `/` slash', () => {
     expect(prefixFrom('/asdf/')).toBe('asdf/');
     expect(prefixFrom('///')).toBe('//');
+  });
+  test('deals with the leading # sign, too', () => {
+    expect(prefixFrom('#/')).toBe('');
+    expect(prefixFrom('#/a/b/')).toBe('a/b/');
   });
 });
 
@@ -94,5 +99,25 @@ describe('fileNameHere(prefix)(key)', () => {
     expect(fileNameHere('a/')('b/bar.md')).toBe('');
     expect(fileNameHere('a/b/c/')('b/bar.md')).toBe('');
     expect(fileNameHere('a/b/')('a/foo.md')).toBe('');
+  });
+});
+
+
+
+describe('isFolder(url)', () => {
+  test(`things that end in slash are folders (by convention)`, () => {
+    expect(isFolder('/')).toBe(true);
+    expect(isFolder('a/b/c/')).toBe(true);
+    expect(isFolder('/a/b/c/')).toBe(true);
+  });
+  test('blank urls are a folder, too', () => {
+    expect(isFolder('')).toBe(true);
+    expect(isFolder(undefined)).toBe(true);
+  });
+  test('some things are not folders', () => {
+    expect(isFolder('foo.md')).toBe(false);
+    expect(isFolder('foo')).toBe(false);
+    expect(isFolder('/a/b/bar.md')).toBe(false);
+    expect(isFolder('a/b/bar.md')).toBe(false);
   });
 });

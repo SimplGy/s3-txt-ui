@@ -1,6 +1,7 @@
 import { slugifyPathComponents } from './fileOps';
 
 const slash = '/'; // "cute" name? Even if it's not a slash one day, it's acting as one.
+const hash = '#';
 
 // eg: ('a/b/bar.md') => '/a/b/bar_md'
 export function urlFrom(s3Key = '') {
@@ -21,6 +22,7 @@ export function urlFrom(s3Key = '') {
 // Given a url from our application, return an s3-friendly prefix
 // eg: ('/a/b/') => 'a/b/'
 export function prefixFrom(url = '') {
+  url = url[0] === hash  ? url.slice(1) : url; // if there is a leading hash, remove it
   url = url[0] === slash ? url.slice(1) : url; // if there is a leading slash, remove it
   return url;
 }
@@ -47,6 +49,7 @@ export function folderNameHere(prefix) {
     );
     const nextSlash = pathWithoutPrefix.indexOf(slash);
     if (nextSlash === -1) { return ''; } // key doesn't have a folder at this level
+    console.log(`folderNameHere('${prefix}')('${key}') => '${pathWithoutPrefix.slice(0, nextSlash)}'`);
     return pathWithoutPrefix.slice(0, nextSlash);
   };
 }
@@ -60,4 +63,9 @@ export function fileNameHere(prefix) {
     ? pathWithoutPrefix
     : '';
   };
+}
+
+export function isFolder(url = '') {
+  const lastChar = url[url.length - 1];
+  return lastChar === '/' || !lastChar; // blank string, undefined
 }

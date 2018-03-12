@@ -3,43 +3,12 @@ import { connect } from 'react-redux';
 import router from '../../horizontal/router';
 import './listOfFiles.css';
 import { awsRegion, awsBucket } from '../../horizontal/api/files';
-
-
-// Is this listObject *in* a "folder"?
-// In s3, every entry is a file, so a folder is just a file with one or more "folder" prefixes in front of the filename
-const isInFolder    = (prefix, entry) => localPath(prefix, entry).includes('/');
-const isNotInFolder = (prefix, entry) => !isInFolder(prefix, entry);
-// entry name at this prefix level (ie: without that parent folder)
-const localPath     = (prefix, entry) => {
-  const path = entry.name.slice(prefix.length);
-  return path[0] === '/' ? path.slice(1) : path; // omit leading '/'
-};
-const folderName    = (prefix, entry) => localPath(prefix, entry).split('/')[0];
+import { fileNameHere, folderNameHere, isFileHere } from '../../horizontal/parsing';
 
 // Is this object a fake folder construct, as created by this module?
 // Folders are objects with a `fileCount` property
 // fileCount must be > 0, so coercion is our friend today.
 const isFolder = ({ fileCount}) => Boolean(fileCount);
-
-/*
-This screen starts with:
-
-* files -- all of them. Some indicate they are in folders by having `/` in the name.
-* prefix -- may be undefined, but if it's there, we should
-  1. strip that prefix from any files we're displaying
-  1. group subfolders UNDER that prefix
-  1. show remaining files
-
-method ideas:
-* entry => entryWithin
-  // may be undefined, if this entry isn't valid in this part of the nav tree
-  // remove the part of the entry's name that is already included in the prefix
-
-
-
- */
-
-
 
 class ListOfFiles extends Component {
 
@@ -73,8 +42,8 @@ class ListOfFiles extends Component {
       .filter(this.applyCurrentFilter)
       .map(f =>
         isFolder(f)
-          ? <OneFolder key={f.name} folder={f} displayName={localPath(prefix, f)} />
-          : <OneFile key={f.name} file={f} displayName={localPath(prefix, f)} />
+          ? <OneFolder key={`${prefix}/${f.localName}`} entry={f} displayName={f.localName}/>
+          : <OneFile key={f.name} file={f} displayName={fileNameHere(prefix)(f.name)}/>
       );
 
     const awsUrl = `http://${awsBucket}.s3-${awsRegion}.amazonaws.com`;
@@ -82,7 +51,7 @@ class ListOfFiles extends Component {
     return (
       <div className="listOfFiles">
         <header>
-          <h2>{ prefix ? `${prefix}/` : 'Your Files'} {displaySubsetOfTotal(displayedRows, filesAndFolders)}</h2>
+          <h2>{ prefix ? prefix : 'Your Files'} {displaySubsetOfTotal(displayedRows, filesAndFolders)}</h2>
           <input type="search" onChange={this.onChangeFilter} autoFocus placeholder="Search (regex)" />
         </header>
         <ul>
@@ -96,19 +65,29 @@ class ListOfFiles extends Component {
 
 }
 
+ListOfFiles.defaultProps = {
+  prefix: ''
+};
+
 // given s3 list objects, collapse all entries that represent folders into a single 'folder' entry
-function collapseFolders(prefix, listObjects) {
+function collapseFolders(prefix = '', listObjects) {
   const folders = {};
 
-  listObjects.filter( o => isInFolder(prefix, o)).forEach( f => {
-    const key = folderName(prefix, f);
-    folders[key] = folders[key] || {};
+  const folderName = folderNameHere(prefix);
+  console.log(`preapplied folder name for prefix '${prefix}'`);
+  listObjects.forEach( entry => {
+    const key = folderName(entry.name);
+    if (key === '') return; // skip things that aren't folders
+    folders[key] = folders[key] || {
+      localName: key,
+      fullPath: [prefix, key].join('/')
+    };
     const folder = folders[key];
-    folder.name = key;
     folder.fileCount = ~~folder.fileCount + 1; // https://stackoverflow.com/questions/18690814/javascript-object-increment-item-if-not-exist
   });
 
-  const files = listObjects.filter( o => isNotInFolder(prefix, o));
+  const files = listObjects.filter(isFileHere);
+
   return [...Object.values(folders), ...files];
 }
 
@@ -134,7 +113,7 @@ class OneFile extends Component {
   render() {
     const { file, displayName } = this.props;
     return (
-      <li className="oneFile">
+      <li className="oneFile" title={file.key}>
         <a href="#" onClick={this.onClick}>{displayName} <small>{file.charCount} chars</small></a>
       </li>
     );
@@ -145,15 +124,14 @@ class OneFolder extends Component {
 
   onClick = (evt) => {
     evt.preventDefault();
-    console.log('clicked on folder', this.props);
-    router.go.list( this.props.folder.name );
+    router.go.list( this.props.entry.fullPath );
   };
 
   render() {
-    const { folder, displayName } = this.props;
+    const { entry, displayName } = this.props;
     return (
-      <li className="oneFolder">
-        <a href="#" onClick={this.onClick}>&#128194; {displayName} <small>{folder.fileCount} files</small></a>
+      <li className="oneFolder" title={entry.fullPath}>
+        <a href="#" onClick={this.onClick}>&#128194; {displayName} <small>{entry.fileCount} files</small></a>
       </li>
     );
   }

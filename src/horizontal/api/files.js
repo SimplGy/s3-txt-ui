@@ -36,6 +36,7 @@ const get = (id) =>
     : getFileContents(id);
 
 function getFileContents(id) {
+  console.log(`files getFileContents(${id})`);
   let willGet = new Promise(function(resolve, reject) {
     const ResponseContentType = 'text/plain';
     const params = {

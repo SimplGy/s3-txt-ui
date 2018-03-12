@@ -23,37 +23,37 @@ class App extends Component {
   }
 
   getFiles = () => {
-    files.get().then(
-      (files) => this.setState({ files })
+    files.get().then(files =>
+      this.setState({ files })
     );
   };
 
   render() {
-    let screen;
-    switch(this.props.screen) {
+    const { screen, prefix } = this.props;
+    console.log(`App render() ${this.state.files.length} files`, this.props);
+    let html;
+    switch(screen) {
     case SCREENS.oneFile:
-      // map url slug to an AWS file descriptor
-      const file = findFileByUrl(this.state.files, this.props.itemSlug);
-      screen = <FileDetails name={file.name} fileKey={file.key} />;
+      const file = findFileByUrl(this.state.files, prefix);
+      html = <FileDetails name={file.name} fileKey={file.key} />;
       break;
     default:
-      screen = <ListOfFiles files={this.state.files} prefix={this.props.itemSlug} />;
+      html = <ListOfFiles files={this.state.files} prefix={prefix} />;
     }
 
-    // Assign a classname to the body tag for each screen (needed to override scrolling behavior)
+    // Set classname to the body tag based on screen (needed to override scrolling behavior)
     const body = document.getElementsByTagName('body')[0];
     if (body) { body.className = 'screen-' + this.props.screen; }
 
-    return screen;
+    return html;
   }
 }
 
 App.propTypes = {
   screen: React.PropTypes.string,
-  itemSlug: React.PropTypes.string
+  data: React.PropTypes.object
 };
 
-
 export default connect(
-  (_) => pick(_, ['screen', 'itemSlug'])
+  (_) => pick(_, ['screen', 'prefix'])
 )(App);

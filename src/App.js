@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import ListOfFiles from './vertical/fileList/ListOfFiles';
 import FileDetails from './vertical/fileList/fileDetails';
 import router, { SCREENS } from './horizontal/router';
-import { findInFilesBySlug } from './horizontal/fileOps';
+import { findFileByUrl } from './horizontal/fileOps';
 import { pick } from 'lodash';
 import files from './horizontal/api/files';
 
@@ -33,7 +33,7 @@ class App extends Component {
     switch(this.props.screen) {
     case SCREENS.oneFile:
       // map url slug to an AWS file descriptor
-      const file = findInFilesBySlug(this.state.files, this.props.itemSlug);
+      const file = findFileByUrl(this.state.files, this.props.itemSlug);
       screen = <FileDetails name={file.name} fileKey={file.key} />;
       break;
     default:

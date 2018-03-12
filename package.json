@@ -3,12 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-jest": "^22.4.1",
     "babel-preset-react": "^6.23.0",
     "eslint": "^3.15.0",
     "eslint-import-resolver-node": "^0.3.0",
     "eslint-plugin-react": "^6.9.0",
+    "jest": "^22.4.2",
     "node-sass": "^4.8.0",
-    "react-scripts": "0.8.5"
+    "react-scripts": "0.8.5",
+    "regenerator-runtime": "^0.11.1"
   },
   "dependencies": {
     "aws-sdk": "^2.22.0",
@@ -22,7 +26,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
+    "test-dom": "react-scripts test --env=jsdom",
+    "test": "jest --watch",
     "sass": "node-sass ./src -wo ./src --compact",
     "sass-once": "node-sass ./src -wo ./src --compact",
     "eject": "react-scripts eject"

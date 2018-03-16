@@ -6,6 +6,7 @@ import router, { SCREENS } from './horizontal/router';
 import { findFileByUrl } from './horizontal/fileOps';
 import { pick } from 'lodash';
 import files from './horizontal/api/files';
+import {urlFrom} from './horizontal/parsing';
 
 
 class App extends Component {
@@ -30,11 +31,10 @@ class App extends Component {
 
   render() {
     const { screen, prefix } = this.props;
-    console.log(`App render() ${this.state.files.length} files`, this.props);
     let html;
     switch(screen) {
     case SCREENS.oneFile:
-      const file = findFileByUrl(this.state.files, prefix);
+      const file = findFileByUrl(this.state.files, urlFrom(prefix));
       html = <FileDetails name={file.name} fileKey={file.key} />;
       break;
     default:

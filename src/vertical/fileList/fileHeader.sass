@@ -1,0 +1,47 @@
+@import '../../horizontal/__'
+
+.fileHeader
+
+  padding: 10px
+  min-height: 50px
+  box-sizing: border-box
+  border-bottom: 1px dotted #ddd
+  color: #333
+
+  // Put heading and aside side-by-side.
+  display: flex
+  h1
+    flex: 1 1 auto
+  aside
+    flex: 0 0 auto
+
+  a
+    color: #999
+    text-decoration: none
+    &:hover
+      text-decoration: underline
+      color: #333
+  a.icon
+    &:hover
+      text-decoration: none
+
+  a, aside
+    line-height: 30px
+
+  aside input
+    margin-left: 10px
+
+  input[type=search]
+    height: 28px
+    line-height: 28px
+    border: 1px solid $quiet
+    border-radius: 3px
+    padding: 0 3px
+    width: 130px
+    &:focus
+      border: 1px solid $gray
+    +phone
+      width: 60px
+
+  p
+    margin: 0

@@ -6,6 +6,10 @@ const {
   fileNameHere,
   folderNameHere,
   isFolder,
+  slugifyPathComponents,
+  joinUrl,
+  trimSlash,
+  keyWithoutPrefix,
 } = require('./parsing');
 
 
@@ -16,6 +20,10 @@ describe('urlFrom(s3Key)', () => {
     expect(urlFrom('a/bar.md')).toBe('/a/bar_md');
     expect(urlFrom('a/b/c/baz.txt')).toBe('/a/b/c/baz_txt');
     expect(urlFrom('a/pickle.md.txt')).toBe('/a/pickle_md_txt');
+  });
+  test(`Adds a leading slash (only one)`, () => {
+    expect(urlFrom('a')).toBe('/a');
+    expect(urlFrom('/a')).toBe('/a');
   });
   test(`given junk input, it returns a slash '/' for the root path`, () => {
     expect(urlFrom(undefined)).toBe('/');
@@ -28,16 +36,16 @@ describe('urlFrom(s3Key)', () => {
 
 describe('prefixFrom(url)', () => {
   test(`selects a prefix from the given url`, () => {
-    expect(prefixFrom('a/')).toBe('a/');
-    expect(prefixFrom('a/b/c/')).toBe('a/b/c/');
+    expect(prefixFrom('a/')).toBe('a');
+    expect(prefixFrom('a/b/c/')).toBe('a/b/c');
   });
-  test('removes one (and only one) leading `/` slash', () => {
-    expect(prefixFrom('/asdf/')).toBe('asdf/');
-    expect(prefixFrom('///')).toBe('//');
+  test('removes leading and trailing `/` slashes', () => {
+    expect(prefixFrom('/asdf/')).toBe('asdf');
+    expect(prefixFrom('///')).toBe('');
   });
   test('deals with the leading # sign, too', () => {
     expect(prefixFrom('#/')).toBe('');
-    expect(prefixFrom('#/a/b/')).toBe('a/b/');
+    expect(prefixFrom('#/a/b/')).toBe('a/b');
   });
 });
 
@@ -55,7 +63,9 @@ describe('isFileHere(prefix)(key)', () => {
   test('returns false if the file key is in a deeper subfolder', () => {
     expect(isFileHere('a/')('a/b/foo.md')).toBe(false);
     expect(isFileHere('a/')('a/b/c/bar.md')).toBe(false);
+    expect(isFileHere('tracker')('tracker/spark-plugin-architecture/02-MShopGlimpseJs-deduped.txt')).toBe(false);
   });
+
   // TODO: ok to rely on the caller to exclude this?
   // test('ignores the leading slash', () => {
   //   expect(isFileHere('/')('foo.md')).toBe(true);
@@ -94,6 +104,10 @@ describe('fileNameHere(prefix)(key)', () => {
     expect(fileNameHere('a/')('a/bar.md')).toBe('bar.md');
     expect(fileNameHere('a/b/c/')('a/b/c/baz.md')).toBe('baz.md');
   });
+  test(`doesn't return file names with leading '/' slashes`, () => {
+    expect(fileNameHere('a')('a/bar.md')).toBe('bar.md');
+    expect(fileNameHere('a/b/c')('a/b/c/baz.md')).toBe('baz.md');
+  });
   test(`returns a blank string if that file isn't here`, () => {
     expect(fileNameHere('')('a/foo.md')).toBe('');
     expect(fileNameHere('a/')('b/bar.md')).toBe('');
@@ -119,5 +133,53 @@ describe('isFolder(url)', () => {
     expect(isFolder('foo')).toBe(false);
     expect(isFolder('/a/b/bar.md')).toBe(false);
     expect(isFolder('a/b/bar.md')).toBe(false);
+  });
+});
+
+
+
+describe('slugifyPathComponents(str)', () => {
+  test('slugifies simple strings', () => {
+    expect(slugifyPathComponents('as.df')).toBe('as_df');
+    expect(slugifyPathComponents('     foo  ')).toBe('foo');
+  });
+  test('slugifies individual path components, leaving a `/`', () => {
+    expect(slugifyPathComponents('/a/b/c.md')).toBe('/a/b/c_md');
+    expect(slugifyPathComponents('a/weird.path/')).toBe('a/weird_path/');
+  });
+});
+
+
+
+describe('joinUrl(parts)', () => {
+  test('joines a couple strings with a `/`', () => {
+    expect(joinUrl(['a','b'])).toBe('a/b');
+    expect(joinUrl(['a','b','c','d'])).toBe('a/b/c/d');
+  });
+  test('removes duplicate slashes', () => {
+    expect(joinUrl(['a/','b'])).toBe('a/b');
+    expect(joinUrl(['a//','/////b'])).toBe('a/b');
+  });
+});
+
+
+
+describe('trimSlash(str)', () => {
+  test('removes duplicate slashes', () => {
+    expect(trimSlash('a')).toBe('a');
+    expect(trimSlash('/a/')).toBe('a');
+    expect(trimSlash('////////a////')).toBe('a');
+  });
+});
+
+
+
+describe('keyWithoutPrefix(prefix, key)', () => {
+  test('removes the prefix, whether you add a slash or not', () => {
+    expect(keyWithoutPrefix('a', 'a/foo.md')).toBe('foo.md');
+    expect(keyWithoutPrefix('a/', 'a/foo.md')).toBe('foo.md');
+    expect(keyWithoutPrefix('/a/', 'a/foo.md')).toBe('foo.md');
+    expect(keyWithoutPrefix('/a/', '/a/foo.md')).toBe('foo.md');
+    expect(keyWithoutPrefix('/a/b/c/', '/a/b/c/foo.md')).toBe('foo.md');
   });
 });

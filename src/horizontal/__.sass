@@ -1,0 +1,21 @@
+$gray: #999
+$quiet: #ccc
+
+$sizePhone: 603px
+$sizeTablet: 1024px
+
+@mixin phone
+  @media (max-width: $sizePhone)
+    @content
+
+@mixin notPhone
+  @media (min-width: $sizePhone + 1)
+    @content
+
+@mixin tablet
+  @media (min-width: $sizePhone+1) and (max-width: $sizeTablet)
+    @content
+
+@mixin desktop
+  @media (min-width: $sizeTablet+1)
+    @content

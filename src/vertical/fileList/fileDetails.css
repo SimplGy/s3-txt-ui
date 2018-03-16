@@ -1,5 +1,20 @@
 body.screen-oneFile {
-  overflow: hidden; }
+  overflow: hidden;
+  height: 100%; }
+
+body.screen-oneFile #ReactRoot, body.screen-oneFile .fileDetails {
+  height: 100%; }
+
+.fileDetails {
+  display: flex;
+  flex-direction: column; }
+
+.fileDetails header {
+  flex: 0 0 auto; }
+
+.fileDetails .textWrapper {
+  position: relative;
+  flex: 1 1 auto; }
 
 .fileDetails .saveBtn {
   position: absolute;
@@ -22,36 +37,6 @@ body.screen-oneFile {
 .fileDetails .saveBtn.saving {
   background: #999; }
 
-.fileDetails header {
-  padding: 10px;
-  height: 50px;
-  box-sizing: border-box;
-  overflow: auto;
-  border-bottom: 1px dotted #ddd; }
-
-.fileDetails header p {
-  margin: 0; }
-
-.fileDetails header .muted {
-  float: right;
-  margin-top: 7px; }
-
-.fileDetails header .backLink {
-  display: inline-block;
-  text-decoration: none;
-  margin-top: 3px;
-  float: left;
-  margin-right: 10px;
-  background: #eee;
-  border-radius: 3px;
-  padding: 1px 3px;
-  color: #666; }
-
-.fileDetails header .backLink:hover {
-  text-decoration: none;
-  background: #e7e7e7;
-  color: #000; }
-
 .fileDetails .editable {
   white-space: pre-wrap;
   margin-bottom: 100px;
@@ -60,19 +45,16 @@ body.screen-oneFile {
 .fileDetails .editable:focus {
   outline: none; }
 
-.fileDetails .textWrapper {
-  position: absolute;
-  top: 50px;
-  right: 0;
-  bottom: 0;
-  left: 0; }
-
 .fileDetails textarea:focus {
   outline: none; }
 
 .fileDetails textarea {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   width: 100%;
-  height: 100%;
   resize: none;
   box-sizing: border-box;
   border: none;

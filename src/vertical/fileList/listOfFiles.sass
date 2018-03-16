@@ -1,45 +1,30 @@
 .listOfFiles
-  padding: 10px
-  $gray: #999
-  $quiet: #ccc
 
-  header
-    border-bottom: 1px dotted $gray
-    padding: 10px 0
-    margin-bottom: 10px
-    h2, input
-      vertical-align: middle
   h2
     display: inline-block
     margin-right: 10px
-  input[type=search]
-    height: 28px
-    line-height: 28px
-    border: 1px solid $quiet
-    border-radius: 3px
-    padding: 0 3px
-    &:focus
-      border: 1px solid $gray
-  ul
+
+  ul.files
     list-style: none
     margin: 0
-    padding: 0
-  li
-    list-style: none
-    margin: 0 -3px
-    padding: 0
-  a
-    display: block
-    padding: 5px 3px
-    color: #333
-    text-decoration: none
-    &:hover
-      background: rgba(0,0,0,0.02)
-      color: black
-      border-radius: 3px
-      border-left: 3px solid lightblue
-      border-right: 3px solid lightblue
+    padding: 10px
+    li
+      list-style: none
       margin: 0 -3px
-    small
-      float: right
-      color: #999
+      padding: 0
+    a
+      display: block
+      padding: 5px 3px
+      color: #333
+      text-decoration: none
+      &:hover
+        background: rgba(0,0,0,0.02)
+        color: black
+        border-radius: 3px
+        border-left: 3px solid lightblue
+        border-right: 3px solid lightblue
+        margin: 0 -3px
+      small
+        float: right
+        clear: both
+        color: #999

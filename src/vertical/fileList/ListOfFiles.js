@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import router from '../../horizontal/router';
 import './listOfFiles.css';
 import { awsRegion, awsBucket } from '../../horizontal/api/files';
-import { fileNameHere, folderNameHere, isFileHere } from '../../horizontal/parsing';
+import {fileNameHere, folderNameHere, isFileHere, joinUrl} from '../../horizontal/parsing';
+import OneFile from './oneFile';
+import OneFolder from './oneFolder';
+import FileHeader from './fileHeader';
 
 // Is this object a fake folder construct, as created by this module?
 // Folders are objects with a `fileCount` property
@@ -13,7 +15,7 @@ const isFolder = ({ fileCount}) => Boolean(fileCount);
 class ListOfFiles extends Component {
 
   state = {
-    filter: undefined // a client side filter, if you want to search for files.
+    filter: undefined // a client side file search filter. undefined === no filter.
   };
 
   onChangeFilter = (evt = {}) => {
@@ -42,7 +44,7 @@ class ListOfFiles extends Component {
       .filter(this.applyCurrentFilter)
       .map(f =>
         isFolder(f)
-          ? <OneFolder key={`${prefix}/${f.localName}`} entry={f} displayName={f.localName}/>
+          ? <OneFolder key={joinUrl([prefix, f.localName])} entry={f} displayName={f.localName}/>
           : <OneFile key={f.name} file={f} displayName={fileNameHere(prefix)(f.name)}/>
       );
 
@@ -50,14 +52,21 @@ class ListOfFiles extends Component {
 
     return (
       <div className="listOfFiles">
-        <header>
-          <h2>{ prefix ? prefix : 'Your Files'} {displaySubsetOfTotal(displayedRows, filesAndFolders)}</h2>
-          <input type="search" onChange={this.onChangeFilter} autoFocus placeholder="Search (regex)" />
-        </header>
-        <ul>
+        <FileHeader
+          name={prefix}
+          muted={displaySubsetOfTotal(displayedRows, filesAndFolders)}
+        >
+          <input type="search" onChange={this.onChangeFilter} autoFocus placeholder="Search" />
+        </FileHeader>
+
+
+
+        <ul className="files">
           {filesAndFolders.length === 0 ? '...' : displayedRows}
         </ul>
+
         <br/>
+
         <small className="muted">Connected to: {awsUrl}</small>
       </div>
     );
@@ -74,19 +83,24 @@ function collapseFolders(prefix = '', listObjects) {
   const folders = {};
 
   const folderName = folderNameHere(prefix);
-  console.log(`preapplied folder name for prefix '${prefix}'`);
+  // console.log(`preapplied folder name for prefix '${prefix}'`);
   listObjects.forEach( entry => {
     const key = folderName(entry.name);
     if (key === '') return; // skip things that aren't folders
     folders[key] = folders[key] || {
       localName: key,
-      fullPath: [prefix, key].join('/')
+      fullPath: joinUrl([prefix, key])
     };
     const folder = folders[key];
     folder.fileCount = ~~folder.fileCount + 1; // https://stackoverflow.com/questions/18690814/javascript-object-increment-item-if-not-exist
   });
 
-  const files = listObjects.filter(isFileHere);
+  // Get a list of: immediate children of this folder that are files
+  const isFile = isFileHere(prefix);
+  const files = listObjects.filter(o => isFile(o.key));
+
+  // const fromTo = `${listObjects.length} => ${files.length}`;
+  // console.log({prefix, folders: Object.values(folders), files, fromTo});
 
   return [...Object.values(folders), ...files];
 }
@@ -101,40 +115,6 @@ function displaySubsetOfTotal(subset = [], total = []) {
   return total === subset
     ? `(${total})`
     : `(${subset} of ${total})`;
-}
-
-class OneFile extends Component {
-
-  onClick = (evt) => {
-    evt.preventDefault();
-    router.go.oneFile( this.props.file.key );
-  };
-
-  render() {
-    const { file, displayName } = this.props;
-    return (
-      <li className="oneFile" title={file.key}>
-        <a href="#" onClick={this.onClick}>{displayName} <small>{file.charCount} chars</small></a>
-      </li>
-    );
-  }
-}
-
-class OneFolder extends Component {
-
-  onClick = (evt) => {
-    evt.preventDefault();
-    router.go.list( this.props.entry.fullPath );
-  };
-
-  render() {
-    const { entry, displayName } = this.props;
-    return (
-      <li className="oneFolder" title={entry.fullPath}>
-        <a href="#" onClick={this.onClick}>&#128194; {displayName} <small>{entry.fileCount} files</small></a>
-      </li>
-    );
-  }
 }
 
 export default connect()(ListOfFiles);

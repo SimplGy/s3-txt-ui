@@ -1,5 +1,4 @@
-import { slugifyPathComponents } from './fileOps';
-import { isFolder, prefixFrom } from './parsing';
+import {isFolder, prefixFrom, urlFrom} from './parsing';
 
 // let silent = false; // if Silent, don't dispatch actions on 'hashchange' event. avoids infinite loop problem
 const SCREENS = {
@@ -7,8 +6,8 @@ const SCREENS = {
   oneFile: 'oneFile'
 };
 
-function setHashWith(str = '', trailing = '') {
-  window.location.hash = '/' + slugifyPathComponents(str) + trailing;
+function setHashWith(str, trailing = '') {
+  window.location.hash = urlFrom(str) + trailing;
 }
 
 // The router singleton interfaces between the browser history api and the application state

@@ -1,24 +1,10 @@
 const {
-  slugifyPathComponents,
   findFileByUrl,
   toArrayByNewlines,
   charCountFromSize,
   wordCountFromText,
   slugify,
 } = require('./fileOps');
-
-
-
-describe('slugifyPathComponents(str)', () => {
-  test('slugifies simple strings', () => {
-    expect(slugifyPathComponents('as.df')).toBe('as_df');
-    expect(slugifyPathComponents('     foo  ')).toBe('foo');
-  });
-  test('slugifies individual path components, leaving a `/`', () => {
-    expect(slugifyPathComponents('/a/b/c.md')).toBe('/a/b/c_md');
-    expect(slugifyPathComponents('a/weird.path/')).toBe('a/weird_path/');
-  });
-});
 
 
 
@@ -34,11 +20,15 @@ describe('findFileByUrl(files, url)', () => {
   afterEach(()  => { console.warn = originalWarn; });
 
   test(`finds files in the list`, () => {
-    const result = findFileByUrl(files, 'foo_md');
+    const result = findFileByUrl(files, '/foo_md');
     expect(result.name).toBe('foo.md');
   });
+  test(`requires an absolute path`, () => {
+    const result = findFileByUrl(files, 'foo_md'); // no leading `/`
+    expect(result.name).toBe('Not Found');
+  });
   test(`finds files with nested paths`, () => {
-    const result = findFileByUrl(files, 'a/b/c/bar_txt');
+    const result = findFileByUrl(files, '/a/b/c/bar_txt');
     expect(result.name).toBe('a/b/c/bar.txt');
   });
   test(`if it doesn't find a file, it still returns a file-shaped object`, () => {
@@ -49,4 +39,5 @@ describe('findFileByUrl(files, url)', () => {
     const result = findFileByUrl(files, 'a/b/c');
     expect(result.name).toBe('Not Found');
   });
+
 });

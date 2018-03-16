@@ -54,12 +54,14 @@ If you add a brand-new sass file, make sure you `import` it somewhere (eg: index
 - [x] Quickly build a functional way to sync a system folder with the s3 bucket (command line npm module?)
 - [x] CORS must be enabled on the bucket/resource. Have a clear warning on the front end when we detect that this is the problem
 - [x] Add a client-side search filter
-- [ ] Support tests
-- [ ] Support navigable folders
+- [x] Support tests
+- [x] Support navigable folders
+- [x] Adjust layout for mobile
+- [x] Reuse header for individual file and file list
+- [ ] Document deployment steps
+- [ ] grow search area when focused on mobile without shifting title text
 - [ ] Have clear error messages for missing bucket/key/secret
-- [ ] Try on mobile, fix any layout problems
 - [ ] Infinite scroll for long file lists
-- [ ] Use the same header for individual file and file list
 
 ## Nice to Have
 

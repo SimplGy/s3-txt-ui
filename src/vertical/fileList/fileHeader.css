@@ -1,0 +1,48 @@
+.fileHeader {
+  padding: 10px;
+  min-height: 50px;
+  box-sizing: border-box;
+  border-bottom: 1px dotted #ddd;
+  color: #333;
+  display: flex; }
+
+.fileHeader h1 {
+  flex: 1 1 auto; }
+
+.fileHeader aside {
+  flex: 0 0 auto; }
+
+.fileHeader a {
+  color: #999;
+  text-decoration: none; }
+
+.fileHeader a:hover {
+  text-decoration: underline;
+  color: #333; }
+
+.fileHeader a.icon:hover {
+  text-decoration: none; }
+
+.fileHeader a, .fileHeader aside {
+  line-height: 30px; }
+
+.fileHeader aside input {
+  margin-left: 10px; }
+
+.fileHeader input[type=search] {
+  height: 28px;
+  line-height: 28px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  padding: 0 3px;
+  width: 130px; }
+
+.fileHeader input[type=search]:focus {
+  border: 1px solid #999; }
+
+@media (max-width: 603px) {
+  .fileHeader input[type=search] {
+    width: 60px; } }
+
+.fileHeader p {
+  margin: 0; }

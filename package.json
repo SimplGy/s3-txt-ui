@@ -25,7 +25,8 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "clean": "rm -rf build",
+    "build": "npm run clean && react-scripts build",
     "test-dom": "react-scripts test --env=jsdom",
     "test": "jest --watch",
     "sass": "node-sass ./src -wo ./src --compact",

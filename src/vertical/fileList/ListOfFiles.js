@@ -6,6 +6,7 @@ import OneFile from './oneFile';
 import OneFolder from './oneFolder';
 import FileHeader from './fileHeader';
 import {getConfig} from '../../horizontal/config';
+import {magicConfigureHash} from '../../horizontal/router';
 
 // Is this object a fake folder construct, as created by this module?
 // Folders are objects with a `fileCount` property
@@ -67,7 +68,9 @@ class ListOfFiles extends Component {
         </ul>
 
         <br/>
-        <small className="muted padded">{connectionMsg}</small>
+        <small className="muted padded">
+          {connectionMsg} <a href={`#${magicConfigureHash}`}>(configure)</a>
+        </small>
       </div>
     );
   }

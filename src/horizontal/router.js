@@ -7,10 +7,9 @@ const SCREENS = {
 };
 
 // Dumb, but this secret path will open the config screen :)
-const magicConfigureHash = `_${SCREENS.configure}_`;
+export const magicConfigureHash = `_${SCREENS.configure}_`;
 
 function setHashWith(str, trailing = '') {
-  console.log('setHashWith', str, trailing);
   window.location.hash = urlFrom(str) + trailing;
 }
 

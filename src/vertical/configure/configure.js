@@ -16,7 +16,6 @@ const EditableField = ({key, val}) => {
         {key}
       </label>
       <input type="text"
-             autoFocus={key==='accessKeyId'}
              id={key} ref={key}
              defaultValue={val}
              title={meta.tip}

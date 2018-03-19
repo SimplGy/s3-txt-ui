@@ -87,7 +87,7 @@ class FileDetails extends Component {
         />
 
         <div className="textWrapper">
-          <textarea autoFocus value={editableText} onChange={this.onChangeText} placeholder="This file is empty." />
+          <textarea value={editableText} onChange={this.onChangeText} placeholder="This file is empty." />
         </div>
 
         {saveButton}

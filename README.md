@@ -146,7 +146,10 @@ The "deployment" consists of building the project, copying it to the `docs/` fol
 - [x] Reuse header for individual file and file list
 - [x] Document deployment steps
 - [x] Add a configuration screen so you can set your aws keys through the ui. they are persisted safely to your local device.
+- [ ] Fix width and form styling on actual mobile devices
+- [ ] Fix long file scrolling and width on mobile (hide keyboard by default, too)
 - [ ] Detect missing configuration
+- [ ] Provide an easy way (QR code?) to configure your mobile
 - [ ] Have clear errors in the UI for timed out or failed aws calls
 - [ ] Have clear error messaging for incorrect configuration
 - [ ] Add a caching layer to the `files` api so you can call `get` as often as you want.

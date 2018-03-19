@@ -32,9 +32,9 @@ class ListOfFiles extends Component {
 
   // return true if the given file matches the current filter
   applyCurrentFilter = ({name} = {}) => {
-    name = name || '';
-    let match = this.state.filter || '';
-    return name.toLowerCase().search(match) > -1;
+    name = (name || '').toLowerCase();
+    let match = (this.state.filter || '').toLowerCase();
+    return name.search(match) > -1;
   };
 
   render() {
@@ -60,7 +60,7 @@ class ListOfFiles extends Component {
           name={prefix}
           muted={displaySubsetOfTotal(displayedRows, filesAndFolders)}
         >
-          <input type="search" onChange={this.onChangeFilter} autoFocus placeholder="Search" />
+          <input type="search" onChange={this.onChangeFilter} placeholder="Search" />
         </FileHeader>
 
         <ul className="files padded">

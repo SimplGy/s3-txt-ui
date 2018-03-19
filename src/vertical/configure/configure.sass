@@ -1,0 +1,52 @@
+.screen-configure
+  padding: 10px
+  $leftCol: 120px
+  $h: 25px
+
+  .sm
+    font-size: 12px
+
+  .col2
+    margin-left: $leftCol
+
+  input::placeholder
+    color: #ccc
+
+  h1, label, input
+    box-sizing: border-box
+
+  input, .saveBtn
+    min-width: 170px
+
+  form
+    p
+      margin: 0
+      margin-bottom: 10px
+    label
+      color: cornflowerblue
+      display: inline-block
+      min-width: $leftCol
+      text-align: right
+      font-size: 12px
+      font-weight: normal
+      padding-right: 5px
+    input
+      height: $h
+      line-height: $h
+
+  .saveBtn
+    background: cornflowerblue
+    color: white
+    border-radius: 3px
+    border: none
+    height: 40px
+    line-height: 37px
+    font-size: 18px
+    cursor: pointer
+    &:hover
+      background: dodgerblue
+
+  fieldset
+    border: none
+    margin: 0
+    padding: 0

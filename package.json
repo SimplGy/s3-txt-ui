@@ -17,6 +17,7 @@
   "dependencies": {
     "aws-sdk": "^2.22.0",
     "lodash": "^4.17.4",
+    "prop-types": "^15.6.1",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
     "react-redux": "^5.0.3",
@@ -25,8 +26,9 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "clean": "rm -rf build",
+    "clean": "rm -rf build && rm -rf docs",
     "build": "npm run clean && react-scripts build",
+    "deploy": "npm run build && cp -r build/ docs",
     "test-dom": "react-scripts test --env=jsdom",
     "test": "jest --watch",
     "sass": "node-sass ./src -wo ./src --compact",

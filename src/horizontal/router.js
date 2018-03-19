@@ -1,12 +1,16 @@
-import {isFolder, prefixFrom, urlFrom} from './parsing';
+import {isFolder, prefixFrom, urlFrom, trimHash, trimSlash} from './parsing';
 
-// let silent = false; // if Silent, don't dispatch actions on 'hashchange' event. avoids infinite loop problem
 const SCREENS = {
   list: 'list',
-  oneFile: 'oneFile'
+  oneFile: 'oneFile',
+  configure: 'configure',
 };
 
+// Dumb, but this secret path will open the config screen :)
+const magicConfigureHash = `_${SCREENS.configure}_`;
+
 function setHashWith(str, trailing = '') {
+  console.log('setHashWith', str, trailing);
   window.location.hash = urlFrom(str) + trailing;
 }
 
@@ -22,22 +26,47 @@ const router = {
 
   // A method for each screen
   go: {
-    [SCREENS.list]: path => setHashWith(path, '/'), // the trailing '/' is our secret way to say "I'm a folder"
-    [SCREENS.oneFile]: setHashWith,
+    [SCREENS.configure]:  ()   => setHashWith(magicConfigureHash),
+    [SCREENS.list]:       path => setHashWith(path, '/'), // trailing '/' says "I'm a folder"
+    [SCREENS.oneFile]:    path => setHashWith(path),
   },
 
   back: () => window.history.back()
 
 };
 
+// Given a url
+function shouldConfigure(hash) {
+  if (trimSlash(trimHash(hash)) === magicConfigureHash) {
+    return true;
+  }
+  // TODO: close, but doesn't work because of timing issues, I think.
+  // const cfg = getConfig();
+  // const errs = validate(cfg);
+  // return Boolean(errs); // if there are missing values, we need to configure
+  return false;
+}
+
 // (location.hash) => reduxAction
 // How do we tell from only a string path whether this is a folder or a file, as far as s3 is concerned?
 // Internal convention: if it ends in a '/', it's a folder
-function hashToAction (url) {
-  const payload = {
-    prefix: prefixFrom(url),
-    screen: isFolder(url) ? SCREENS.list : SCREENS.oneFile
-  };
+function hashToAction(hash) {
+  let payload;
+
+  // Configuration time
+  if (shouldConfigure(hash)) {
+    payload = {
+      screen: SCREENS.configure
+    };
+
+  // File related actions
+  } else {
+    payload = {
+      prefix: prefixFrom(hash),
+      screen: isFolder(hash) ? SCREENS.list : SCREENS.oneFile
+    };
+  }
+
   return { type: 'url_changed', payload };
 }
 

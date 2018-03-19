@@ -2,10 +2,12 @@
   display: inline-block;
   margin-right: 10px; }
 
+.listOfFiles .padded {
+  padding: 10px; }
+
 .listOfFiles ul.files {
   list-style: none;
-  margin: 0;
-  padding: 10px; }
+  margin: 0; }
 
 .listOfFiles ul.files li {
   list-style: none;

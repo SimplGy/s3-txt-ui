@@ -10,6 +10,8 @@ const {
   joinUrl,
   trimSlash,
   keyWithoutPrefix,
+  isNumber,
+  numberify,
 } = require('./parsing');
 
 
@@ -181,5 +183,36 @@ describe('keyWithoutPrefix(prefix, key)', () => {
     expect(keyWithoutPrefix('/a/', 'a/foo.md')).toBe('foo.md');
     expect(keyWithoutPrefix('/a/', '/a/foo.md')).toBe('foo.md');
     expect(keyWithoutPrefix('/a/b/c/', '/a/b/c/foo.md')).toBe('foo.md');
+  });
+});
+
+
+
+describe('isNumber(thing)', () => {
+  test('identifies strings and numbers as numbers', () => {
+    expect(isNumber(100)).toBe(true);
+    expect(isNumber("100")).toBe(true);
+  });
+  test('non numeric things return false', () => {
+    expect(isNumber()).toBe(false);
+    expect(isNumber(null)).toBe(false);
+    expect(isNumber('asdf')).toBe(false);
+    expect(isNumber('100asdf')).toBe(false);
+    expect(isNumber('asdf100')).toBe(false);
+  });
+});
+
+
+
+describe('numberify(thing)', () => {
+  test('turns string numbers into actual number type', () => {
+    expect(numberify("100")).toBe(100);
+    expect(numberify("42.111")).toBe(42.111);
+  });
+  test('Does not modify non-number things', () => {
+    expect(numberify("hello")).toBe("hello");
+    expect(numberify("42asdf")).toBe("42asdf");
+    expect(numberify("asdf42")).toBe("asdf42");
+    expect(numberify(undefined)).toBe(undefined);
   });
 });

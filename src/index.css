@@ -38,3 +38,16 @@ a.icon {
     font-weight: bold; }
   h4, h5 {
     font-size: 16px; } }
+
+footer.alerts {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0; }
+
+footer.alerts p {
+  margin: 0;
+  margin-top: 1px;
+  padding: 3px 10px;
+  background-color: coral;
+  color: white; }

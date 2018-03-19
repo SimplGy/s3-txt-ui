@@ -15,6 +15,10 @@ Maybe later support text editing
 
 ## Start Developing
 
+Get dependencies:
+
+    npm install
+
 Run the development environment:
 
     npm start
@@ -32,6 +36,14 @@ Or run it as a one-time compilation:
     npm run sass-once
 
 If you add a brand-new sass file, make sure you `import` it somewhere (eg: index.js' `import './index.css';`)
+
+## Deploying
+
+This repo uses GitHub pages to deploy for convenience.
+The "deployment" consists of building the project, copying it to the `docs/` folder (Github convention), and pushing to remote.
+
+    npm run deploy
+    # git commit/push
 
 ## Todo list
 
@@ -58,9 +70,12 @@ If you add a brand-new sass file, make sure you `import` it somewhere (eg: index
 - [x] Support navigable folders
 - [x] Adjust layout for mobile
 - [x] Reuse header for individual file and file list
-- [ ] Document deployment steps
+- [x] Document deployment steps
+- [x] Add a configuration screen so you can set your aws keys through the ui. they are persisted safely to your local device.
+- [ ] Detect missing configuration
+- [ ] Have clear error messaging for incorrect configuration
+- [ ] Add a caching layer to the `files` api so you can call `get` as often as you want.
 - [ ] grow search area when focused on mobile without shifting title text
-- [ ] Have clear error messages for missing bucket/key/secret
 - [ ] Infinite scroll for long file lists
 
 ## Nice to Have

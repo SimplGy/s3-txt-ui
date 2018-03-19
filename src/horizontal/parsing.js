@@ -12,7 +12,7 @@ export function trimSlash(str = '') {
   return str;
 }
 
-function trimHash(str = '') {
+export function trimHash(str = '') {
   if(str[0] === hash) { return trimHash(str.slice(1)); }
   return str;
 }
@@ -98,4 +98,20 @@ export function fileNameHere(prefix) {
 export function isFolder(url = '') {
   const lastChar = url[url.length - 1];
   return lastChar === '/' || !lastChar; // blank string, undefined
+}
+
+// returns true if the given thing can be a number
+// eg: ("100") => true
+export function isNumber(thing) {
+  if (thing == null) return false;
+  // 100 == "100"
+  return parseFloat(thing) == thing; // eslint-disable-line eqeqeq
+}
+
+// If the thing is a number, return the number version of it (not the string)
+export function numberify(thing) {
+  if (isNumber(thing)) {
+    return parseFloat(thing);
+  }
+  return thing;
 }

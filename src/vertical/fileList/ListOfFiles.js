@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './listOfFiles.css';
-import { awsRegion, awsBucket } from '../../horizontal/api/files';
 import {fileNameHere, folderNameHere, isFileHere, joinUrl} from '../../horizontal/parsing';
 import OneFile from './oneFile';
 import OneFolder from './oneFolder';
 import FileHeader from './fileHeader';
+import {getConfig} from '../../horizontal/config';
 
 // Is this object a fake folder construct, as created by this module?
 // Folders are objects with a `fileCount` property
@@ -48,7 +48,10 @@ class ListOfFiles extends Component {
           : <OneFile key={f.name} file={f} displayName={fileNameHere(prefix)(f.name)}/>
       );
 
-    const awsUrl = `http://${awsBucket}.s3-${awsRegion}.amazonaws.com`;
+    const { Bucket, region } = getConfig();
+    const connectionMsg = Bucket && region
+      ? `Connected to: http://${Bucket}.s3-${region}.amazonaws.com`
+      : `no connection configured.`;
 
     return (
       <div className="listOfFiles">
@@ -59,15 +62,12 @@ class ListOfFiles extends Component {
           <input type="search" onChange={this.onChangeFilter} autoFocus placeholder="Search" />
         </FileHeader>
 
-
-
-        <ul className="files">
+        <ul className="files padded">
           {filesAndFolders.length === 0 ? '...' : displayedRows}
         </ul>
 
         <br/>
-
-        <small className="muted">Connected to: {awsUrl}</small>
+        <small className="muted padded">{connectionMsg}</small>
       </div>
     );
   }
@@ -99,8 +99,8 @@ function collapseFolders(prefix = '', listObjects) {
   const isFile = isFileHere(prefix);
   const files = listObjects.filter(o => isFile(o.key));
 
-  // const fromTo = `${listObjects.length} => ${files.length}`;
-  // console.log({prefix, folders: Object.values(folders), files, fromTo});
+  const fromTo = `${listObjects.length} => ${files.length}`;
+  console.log({prefix, folders: Object.values(folders), files, fromTo});
 
   return [...Object.values(folders), ...files];
 }

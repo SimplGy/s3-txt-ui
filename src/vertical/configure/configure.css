@@ -1,0 +1,41 @@
+.screen-configure {
+  padding: 10px; }
+  .screen-configure .sm {
+    font-size: 12px; }
+  .screen-configure .col2 {
+    margin-left: 120px; }
+  .screen-configure input::placeholder {
+    color: #ccc; }
+  .screen-configure h1, .screen-configure label, .screen-configure input {
+    box-sizing: border-box; }
+  .screen-configure input, .screen-configure .saveBtn {
+    min-width: 170px; }
+  .screen-configure form p {
+    margin: 0;
+    margin-bottom: 10px; }
+  .screen-configure form label {
+    color: cornflowerblue;
+    display: inline-block;
+    min-width: 120px;
+    text-align: right;
+    font-size: 12px;
+    font-weight: normal;
+    padding-right: 5px; }
+  .screen-configure form input {
+    height: 25px;
+    line-height: 25px; }
+  .screen-configure .saveBtn {
+    background: cornflowerblue;
+    color: white;
+    border-radius: 3px;
+    border: none;
+    height: 40px;
+    line-height: 37px;
+    font-size: 18px;
+    cursor: pointer; }
+    .screen-configure .saveBtn:hover {
+      background: dodgerblue; }
+  .screen-configure fieldset {
+    border: none;
+    margin: 0;
+    padding: 0; }

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import './fileHeader.css';
 import {joinUrl, trimSlash} from '../../horizontal/parsing';
 
@@ -38,7 +38,7 @@ function pathLinksFrom(filename) {
   );
   return [
     ...pathMarkup,
-    <span>{` / ${curLocation}`}</span>
+    <span key="tail">{` / ${curLocation}`}</span>
   ];
 }
 

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import './fileDetails.css';
 import files from '../../horizontal/api/files';
@@ -98,8 +99,8 @@ class FileDetails extends Component {
 }
 
 FileDetails.propTypes = {
-  name: React.PropTypes.string.isRequired,
-  fileKey: React.PropTypes.string // `key` is a reserved word in JSX / react
+  name: PropTypes.string.isRequired,
+  fileKey: PropTypes.string // `key` is a reserved word in JSX / react
 };
 
 export default connect()(FileDetails);

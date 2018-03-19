@@ -20,17 +20,22 @@ class App extends Component {
   };
 
   handleError = ({ code, message }) => {
-    this.showAlert(`AWS error: ${message}`);
+
     switch(code) {
     case 'CredentialsError': // Credentials haven't been provided
-      // router.go.configure();
-      break;
     case 'InvalidAccessKeyId': // that access key (user) actually doesn't exist
+    case 'SignatureDoesNotMatch': // the key and secret don't match
+      this.showAlert(`AWS error: ${message}`);
       // router.go.configure();
       break;
-    case 'SignatureDoesNotMatch': // the key and secret don't match
+    case 'NetworkingError': // probably the bucket isn't configured for CORS
+      this.showAlert(`AWS error: ${message}. Did you enable CORS for this bucket?`);
+      break;
+    case 'AccessDenied':
+      this.showAlert(`AWS error: ${message}. Are AWS permissions configured correctly?`);
       break;
     default:
+      this.showAlert(`AWS error: ${message}. Did you enable CORS for this bucket?`);
       console.warn(`Unhandled error code '${code}'`);
     }
     throw new Error('Handled Error');

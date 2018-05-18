@@ -158,6 +158,8 @@ The "deployment" consists of building the project, copying it to the `docs/` fol
 
 ## Nice to Have
 
+- [ ] (for long files) Remember your last scroll position
+- [ ] (for long files) Scroll to the area that was most recently edited (maybe from another device)
 - [ ] Live refresh the text, mixing in the current user's edits intelligently (2-way-sync challenge)
 - [ ] cache file list and file contents on device; if old, greedy-invalidate. if not fresh, lazy-invalidate
 - [ ] gui configurable s3 bucket target & key
